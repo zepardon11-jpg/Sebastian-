@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Login - Sebastian AI</title>
+    <title>Login - Silverwolf AI</title>
     <style>
         * {
             margin: 0;
@@ -172,14 +172,19 @@
             font-size: 12px;
             color: rgba(255,255,255,0.5);
         }
+
+        .credits span {
+            color: #f472b6;
+            font-weight: 500;
+        }
     </style>
 </head>
 <body>
     <div class="login-container">
         <div class="login-card">
             <div class="logo-area">
-                <img src="https://files.catbox.moe/qdv9bx.jpg" alt="Sebastian Avatar">
-                <h2>Sebastian AI</h2>
+                <img src="https://files.catbox.moe/qdv9bx.jpg" alt="Silverwolf Avatar">
+                <h2>Silverwolf AI</h2>
                 <p>Login to continue</p>
             </div>
 
@@ -195,7 +200,7 @@
 
             <button id="loginBtn">➤ Enter</button>
             <div id="errorMsg" class="error-msg"></div>
-            <div class="credits">© Sebastian AI · Private acces </div>
+            <div class="credits">© Silverwolf AI · Private access | <span>Silverwolf bini gua jir</span></div>
         </div>
     </div>
 
@@ -210,7 +215,7 @@
     <script>
         const validUsers = [
             { username: "xx1", password: "yt12", role: "member" },
-            { username: "zepar", password: "virus", role: "ADMIN😈"}
+            { username: "zepar", password: "virus", role: "ADMIN😈" }
         ];
 
         document.getElementById('loginBtn').addEventListener('click', function() {
@@ -221,8 +226,8 @@
             const user = validUsers.find(u => u.username === username && u.password === password);
 
             if (user) {
-                localStorage.setItem('sebastian_user', username);
-                localStorage.setItem('sebastian_role', user.role);
+                localStorage.setItem('silverwolf_user', username);
+                localStorage.setItem('silverwolf_role', user.role);
                 localStorage.setItem('music_playing', 'false');
                 window.location.href = 'chat.html';
             } else {
