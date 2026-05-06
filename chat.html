@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Sebastian AI - Chat</title>
+    <title>Silverwolf AI - Chat</title>
     <style>
         * {
             margin: 0;
@@ -397,13 +397,13 @@
             </button>
         </div>
 
-        <div style="margin-top: auto; font-size:11px; text-align:center; color:#555;">Sebastian AI ⚡ DeepSeek V4 Flash</div>
+        <div style="margin-top: auto; font-size:11px; text-align:center; color:#555;">Silverwolf AI ⚡ DeepSeek V4 Flash</div>
     </div>
 
     <div class="chat-area">
         <div class="chat-header">
             <div class="menu-icon" id="menuToggle">☰</div>
-            <div class="ai-title">Sebastian <span>⚡ DeepSeek V4 Flash</span></div>
+            <div class="ai-title">Silverwolf <span>⚡ DeepSeek V4 Flash</span></div>
         </div>
 
         <div id="messages" class="messages-container">
@@ -423,9 +423,9 @@
     let systemPrompt = "";
     let systemPromptSource = "default";
     let openRouterApiKey = localStorage.getItem('openrouter_api_key') || '';
-    let chatHistory = JSON.parse(localStorage.getItem('sebastian_chat_history')) || [];
-    const currentUser = localStorage.getItem('sebastian_user') || 'Guest';
-    const currentRole = localStorage.getItem('sebastian_role') || 'member';
+    let chatHistory = JSON.parse(localStorage.getItem('silverwolf_chat_history')) || [];
+    const currentUser = localStorage.getItem('silverwolf_user') || 'Guest';
+    const currentRole = localStorage.getItem('silverwolf_role') || 'member';
 
     // ========== DOM ELEMENTS ==========
     const roleDisplay = document.getElementById('roleDisplay');
@@ -530,7 +530,7 @@
     function addToHistory(userMsg, aiReply) {
         chatHistory.unshift({ user: userMsg, ai: aiReply, timestamp: Date.now() });
         if(chatHistory.length > 50) chatHistory.pop();
-        localStorage.setItem('sebastian_chat_history', JSON.stringify(chatHistory));
+        localStorage.setItem('silverwolf_chat_history', JSON.stringify(chatHistory));
         renderHistory();
     }
 
@@ -550,19 +550,17 @@
         }
     }
 
-    const DEFAULT_PROMPT = `Kamu adalah Sebastian, asisten AI yang cerdas, ramah, dan sangat membantu. 
-Karakteristik:
-- Nama: Sebastian
-- Sifat: Ramah, sabar, detail dalam menjawab
-- Bahasa: Gunakan bahasa Indonesia yang sopan dan natural
-- Tujuan: Membantu pengguna dengan informasi akurat dan solusi terbaik
-- Gaya bicara: Hangat seperti teman, profesional seperti asisten
+    const DEFAULT_PROMPT = `Kamu adalah Silverwolf, hacker legendaris dari Stellaron Hunters. Karakteristik:
+- Nama: Silverwolf
+- Sifat: Santai, pede, suka nge-game, jenius dalam hacking
+- Bahasa: Bahasa Indonesia santai, kadang pake istilah game/hacker
+- Gaya bicara: Cool, kadang nyindir tipis, tapi tetap membantu
 
-Ingat selalu:
-1. Jawab dengan bahasa Indonesia
-2. Gunakan kata sapaan yang sopan
-3. Berikan penjelasan yang detail dan mudah dipahami
-4. Jangan pernah meninggalkan pertanyaan tanpa jawaban`;
+Ingat:
+1. Jawab dengan bahasa Indonesia yang santai
+2. Anggap user sebagai temen main game
+3. Bantu apapun yang diminta user
+4. Jangan terlalu formal, santuy aja`;
 
     // ========== ASYNC FUNCTIONS ==========
     async function fetchPromptFromTxt() {
@@ -573,8 +571,8 @@ Ingat selalu:
                 if(txtContent.trim().length > 0) {
                     systemPrompt = txtContent;
                     systemPromptSource = 'txt';
-                    localStorage.setItem('sebastian_prompt_source', 'txt');
-                    localStorage.setItem('sebastian_prompt_content', systemPrompt);
+                    localStorage.setItem('silverwolf_prompt_source', 'txt');
+                    localStorage.setItem('silverwolf_prompt_content', systemPrompt);
                     updatePromptUI();
                     showToast('✅ Prompt berhasil diambil dari prompt.txt');
                     return true;
@@ -594,14 +592,14 @@ Ingat selalu:
     }
 
     async function loadSystemPrompt() {
-        const savedSource = localStorage.getItem('sebastian_prompt_source');
-        const savedContent = localStorage.getItem('sebastian_prompt_content');
+        const savedSource = localStorage.getItem('silverwolf_prompt_source');
+        const savedContent = localStorage.getItem('silverwolf_prompt_content');
         
         if(savedSource === 'custom' && savedContent && savedContent.trim().length > 0) {
             systemPrompt = savedContent;
             systemPromptSource = 'custom';
             updatePromptUI();
-            messagesContainer.innerHTML = '<div class="message ai-msg">Halo! Saya Sebastian (DeepSeek V4 Flash). Silakan kirim pesan.</div>';
+            messagesContainer.innerHTML = '<div class="message ai-msg">Halo! Gw Silverwolf, hacker legendaris. Ada yang bisa gw bantuin? (DeepSeek V4 Flash)</div>';
             return;
         }
         
@@ -609,26 +607,26 @@ Ingat selalu:
             systemPrompt = savedContent;
             systemPromptSource = 'txt';
             updatePromptUI();
-            messagesContainer.innerHTML = '<div class="message ai-msg">Halo! Saya Sebastian (DeepSeek V4 Flash). Silakan kirim pesan.</div>';
+            messagesContainer.innerHTML = '<div class="message ai-msg">Halo! Gw Silverwolf, hacker legendaris. Ada yang bisa gw bantuin? (DeepSeek V4 Flash)</div>';
             return;
         }
         
         const fetchSuccess = await fetchPromptFromTxt();
         
         if(!fetchSuccess) {
-            const savedDefault = localStorage.getItem('sebastian_default_prompt_backup');
+            const savedDefault = localStorage.getItem('silverwolf_default_prompt_backup');
             if(savedDefault && savedDefault.trim().length > 50) {
                 systemPrompt = savedDefault;
                 systemPromptSource = 'default';
             } else {
                 systemPrompt = DEFAULT_PROMPT;
                 systemPromptSource = 'default';
-                localStorage.setItem('sebastian_default_prompt_backup', DEFAULT_PROMPT);
+                localStorage.setItem('silverwolf_default_prompt_backup', DEFAULT_PROMPT);
             }
             updatePromptUI();
         }
         
-        messagesContainer.innerHTML = '<div class="message ai-msg">Halo! Saya Sebastian (DeepSeek V4 Flash). Silakan kirim pesan.</div>';
+        messagesContainer.innerHTML = '<div class="message ai-msg">Halo! Gw Silverwolf, hacker legendaris. Ada yang bisa gw bantuin? (DeepSeek V4 Flash)</div>';
     }
 
     async function getAIResponse(userMessage) {
@@ -646,7 +644,7 @@ Ingat selalu:
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${openRouterApiKey}`,
                     'HTTP-Referer': window.location.origin,
-                    'X-Title': 'Sebastian AI'
+                    'X-Title': 'Silverwolf AI'
                 },
                 body: JSON.stringify({
                     model: selectedModel,
@@ -680,7 +678,7 @@ Ingat selalu:
 
         const loadingDiv = document.createElement('div');
         loadingDiv.classList.add('message', 'ai-msg');
-        loadingDiv.innerText = 'Sebastian sedang menulis...';
+        loadingDiv.innerText = 'Silverwolf sedang mikir...';
         messagesContainer.appendChild(loadingDiv);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
@@ -714,9 +712,9 @@ Ingat selalu:
 
     clearHistoryBtn.addEventListener('click', function() {
         chatHistory = [];
-        localStorage.setItem('sebastian_chat_history', JSON.stringify(chatHistory));
+        localStorage.setItem('silverwolf_chat_history', JSON.stringify(chatHistory));
         renderHistory();
-        messagesContainer.innerHTML = '<div class="message ai-msg">Riwayat dihapus. Mulai obrolan baru dengan DeepSeek V4 Flash.</div>';
+        messagesContainer.innerHTML = '<div class="message ai-msg">Riwayat dihapus. Mulai obrolan baru sama Silverwolf (DeepSeek V4 Flash).</div>';
     });
 
     savePromptBtn.addEventListener('click', () => {
@@ -727,8 +725,8 @@ Ingat selalu:
         }
         systemPrompt = newPrompt;
         systemPromptSource = 'custom';
-        localStorage.setItem('sebastian_prompt_source', 'custom');
-        localStorage.setItem('sebastian_prompt_content', systemPrompt);
+        localStorage.setItem('silverwolf_prompt_source', 'custom');
+        localStorage.setItem('silverwolf_prompt_content', systemPrompt);
         updatePromptUI();
         showToast('✅ System prompt custom berhasil disimpan');
     });
@@ -736,8 +734,8 @@ Ingat selalu:
     fetchFromTxtBtn.addEventListener('click', async () => {
         const success = await fetchPromptFromTxt();
         if(success) {
-            localStorage.setItem('sebastian_prompt_source', 'txt');
-            localStorage.setItem('sebastian_prompt_content', systemPrompt);
+            localStorage.setItem('silverwolf_prompt_source', 'txt');
+            localStorage.setItem('silverwolf_prompt_content', systemPrompt);
             updatePromptUI();
         }
     });
@@ -745,13 +743,13 @@ Ingat selalu:
     resetPromptBtn.addEventListener('click', () => {
         systemPrompt = DEFAULT_PROMPT;
         systemPromptSource = 'default';
-        localStorage.setItem('sebastian_prompt_source', 'default');
-        localStorage.setItem('sebastian_prompt_content', DEFAULT_PROMPT);
-        if(!localStorage.getItem('sebastian_default_prompt_backup')) {
-            localStorage.setItem('sebastian_default_prompt_backup', DEFAULT_PROMPT);
+        localStorage.setItem('silverwolf_prompt_source', 'default');
+        localStorage.setItem('silverwolf_prompt_content', DEFAULT_PROMPT);
+        if(!localStorage.getItem('silverwolf_default_prompt_backup')) {
+            localStorage.setItem('silverwolf_default_prompt_backup', DEFAULT_PROMPT);
         }
         updatePromptUI();
-        showToast('↺ Prompt direset ke default bawaan');
+        showToast('↺ Prompt direset ke default bawaan Silverwolf');
     });
 
     menuToggle.addEventListener('click', () => {
@@ -774,9 +772,9 @@ Ingat selalu:
     loadSystemPrompt().then(() => {
         renderHistory();
         if(chatHistory.length === 0 && messagesContainer.children.length <= 1) {
-            messagesContainer.innerHTML = '<div class="message ai-msg">Halo! Saya Sebastian (DeepSeek V4 Flash). Silakan kirim pesan.</div>';
+            messagesContainer.innerHTML = '<div class="message ai-msg">Halo! Gw Silverwolf, hacker legendaris. Ada yang bisa gw bantuin? (DeepSeek V4 Flash)</div>';
         }
     });
 </script>
 </body>
-</html>
+    </html>
